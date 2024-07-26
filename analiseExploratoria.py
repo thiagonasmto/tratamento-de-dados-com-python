@@ -216,8 +216,12 @@ def normalizar_dados(dataframe, colunas=None):
 
 # Exemplo de uso das funções
 if __name__ == "__main__":
-    caminho_arquivo = 'heart_attack_prediction_dataset.csv'
-    dados = pd.read_csv(caminho_arquivo)
+    caminho_arquivo1 = './clusters_output/cluster_0.csv'
+    caminho_arquivo2 = './clusters_output/cluster_1.csv'
+    caminho_arquivo3 = './clusters_output/cluster_2.csv'
+    dados1 = pd.read_csv(caminho_arquivo1)
+    dados2 = pd.read_csv(caminho_arquivo2)
+    dados3 = pd.read_csv(caminho_arquivo3)
     
     # Exemplo de chamadas de função
     colunas = ['Age', 'Cholesterol']  # Substitua pelas suas colunas
@@ -236,7 +240,9 @@ if __name__ == "__main__":
     # plotar_pairgrid(dados, colunas=['Patient ID','Age','Sex','Cholesterol','Blood Pressure','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Country','Continent','Hemisphere','Heart Attack Risk'], hue_coluna='Heart Attack Risk', palette='RdBu_r', alpha=0.7)
     
     # Exemplo de uso da função plotar_heatmap_correlacao
-    # plotar_heatmap_correlacao(dados, colunas=['Patient ID','Age','Sex','Cholesterol','Blood Pressure','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Country','Continent','Hemisphere','Heart Attack Risk'])
+    plotar_heatmap_correlacao(dados1, colunas=['Age','Sex','Cholesterol','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Heart Attack Risk'])
+    plotar_heatmap_correlacao(dados2, colunas=['Age','Sex','Cholesterol','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Heart Attack Risk'])
+    plotar_heatmap_correlacao(dados3, colunas=['Age','Sex','Cholesterol','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Heart Attack Risk'])
 
     # Exemplo de uso da função plotar_violinplot
     # plotar_violinplot(dados, coluna_x='Diet', coluna_y='Age', hue_coluna='Sex', split=True, inner="quartile", palette=["lightblue", "lightpink"], estilo='white')
@@ -244,6 +250,6 @@ if __name__ == "__main__":
     # Gerar relatório de profiling e salvar como HTML
     # gerar_relatorio_profiling(dados, titulo="Relatório de Profiling", arquivo_saida="Relatório do dataset")
 
-    dados_normalizados = normalizar_dados(dados)
-    print(dados_normalizados.head())
-    dados_normalizados.to_csv('dados_normalizados.csv', index=False)
+    # dados_normalizados = normalizar_dados(dados)
+    # print(dados_normalizados.head())
+    # dados_normalizados.to_csv('dados_normalizados.csv', index=False)
