@@ -1,7 +1,7 @@
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
-from pandas_profiling import ProfileReport
+from ydata_profiling import ProfileReport
 sns.set()
 
 # Função para carregar dados de um arquivo CSV
@@ -230,7 +230,7 @@ if __name__ == "__main__":
     # plotar_pairgrid(dados, colunas=['Age','Heart Attack Risk'], hue_coluna='Heart Attack Risk', palette='RdBu_r', alpha=0.7)
     
     # Exemplo de uso da função plotar_heatmap_correlacao
-    # plotar_heatmap_correlacao(dados, colunas=['Age','Heart Attack Risk'])
+    plotar_heatmap_correlacao(dados, colunas=['Age','Cholesterol','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Heart Attack Risk'])
 
     # Exemplo de uso da função plotar_violinplot
     # plotar_violinplot(dados, coluna_x='Diet', coluna_y='Age', hue_coluna='Sex', split=True, inner="quartile", palette=["lightblue", "lightpink"], estilo='white')
