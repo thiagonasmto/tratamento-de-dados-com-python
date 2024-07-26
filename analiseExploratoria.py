@@ -2,6 +2,7 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 from pandas_profiling import ProfileReport
+from sklearn.preprocessing import MinMaxScaler
 sns.set()
 
 # Função para carregar dados de um arquivo CSV
@@ -190,13 +191,6 @@ def plotar_violinplot(dados, coluna_x, coluna_y, hue_coluna=None, split=False, i
         plt.show()
 
 def gerar_relatorio_profiling(dados, titulo="Pandas Profiling Report", arquivo_saida=None):
-    """
-    Gera um relatório de perfil dos dados utilizando pandas-profiling e, opcionalmente, salva o relatório como um arquivo HTML.
-
-    :param dados: DataFrame contendo os dados a serem analisados.
-    :param titulo: Título do relatório.
-    :param arquivo_saida: Caminho do arquivo para salvar o relatório em formato HTML. Se None, o relatório não será salvo.
-    """
     # Gerando o relatório
     profile = ProfileReport(dados, title=titulo, explorative=True)
 
@@ -207,6 +201,18 @@ def gerar_relatorio_profiling(dados, titulo="Pandas Profiling Report", arquivo_s
     if arquivo_saida:
         profile.to_file(output_file=arquivo_saida)
 
+def normalizar_dados(dataframe, colunas=None):
+    # Se colunas não forem especificadas, selecionar todas as colunas numéricas
+    if colunas is None:
+        colunas = dataframe.select_dtypes(include=['float64', 'int64']).columns.tolist()
+    
+    # Inicializar o MinMaxScaler
+    scaler = MinMaxScaler()
+    
+    # Aplicar o scaler nas colunas especificadas
+    dataframe[colunas] = scaler.fit_transform(dataframe[colunas])
+    
+    return dataframe
 
 # Exemplo de uso das funções
 if __name__ == "__main__":
@@ -227,13 +233,17 @@ if __name__ == "__main__":
     # plotar_pairplot(dados, colunas=['Age', 'Cholesterol','Heart Rate', 'Exercise Hours Per Week'], hue_coluna='Age', tamanho=2.5)
 
     # Exemplo de uso da função plotar_pairgrid
-    # plotar_pairgrid(dados, colunas=['Age','Heart Attack Risk'], hue_coluna='Heart Attack Risk', palette='RdBu_r', alpha=0.7)
+    # plotar_pairgrid(dados, colunas=['Patient ID','Age','Sex','Cholesterol','Blood Pressure','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Country','Continent','Hemisphere','Heart Attack Risk'], hue_coluna='Heart Attack Risk', palette='RdBu_r', alpha=0.7)
     
     # Exemplo de uso da função plotar_heatmap_correlacao
-    # plotar_heatmap_correlacao(dados, colunas=['Age','Heart Attack Risk'])
+    # plotar_heatmap_correlacao(dados, colunas=['Patient ID','Age','Sex','Cholesterol','Blood Pressure','Heart Rate','Diabetes','Family History','Smoking','Obesity','Alcohol Consumption','Exercise Hours Per Week','Diet','Previous Heart Problems','Medication Use','Stress Level','Sedentary Hours Per Day','Income','BMI','Triglycerides','Physical Activity Days Per Week','Sleep Hours Per Day','Country','Continent','Hemisphere','Heart Attack Risk'])
 
     # Exemplo de uso da função plotar_violinplot
     # plotar_violinplot(dados, coluna_x='Diet', coluna_y='Age', hue_coluna='Sex', split=True, inner="quartile", palette=["lightblue", "lightpink"], estilo='white')
 
     # Gerar relatório de profiling e salvar como HTML
-    gerar_relatorio_profiling(dados, titulo="Relatório de Profiling", arquivo_saida="Relatório do dataset")
+    # gerar_relatorio_profiling(dados, titulo="Relatório de Profiling", arquivo_saida="Relatório do dataset")
+
+    dados_normalizados = normalizar_dados(dados)
+    print(dados_normalizados.head())
+    dados_normalizados.to_csv('dados_normalizados.csv', index=False)
